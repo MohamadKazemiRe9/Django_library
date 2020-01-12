@@ -45,7 +45,7 @@ class ExpUser(AbstractBaseUser):
     objects = ExpUserManager()
 
     def __str__(self):
-        return self.username
+        return self.email+" - "+self.username
 
     def has_perm(self,perm,obj=None):
         return self.is_admin

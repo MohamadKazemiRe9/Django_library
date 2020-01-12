@@ -1,5 +1,7 @@
 from django.shortcuts import render ,HttpResponse
+from .models import ExpUser
 
 # Create your views here.
 def index (request):
-    return HttpResponse("users")
+    users = ExpUser.objects.all()
+    return HttpResponse(users)
