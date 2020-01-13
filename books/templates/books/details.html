@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Font Awesome Icon Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .checked {
+      color: orange;
+    }
+
+    .refresh {
+      margin-left: 20px;
+      transition: transform 2s, color 2s;
+    }
+
+    .refresh:hover {
+      transform: rotate(360deg);
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>{{ book.name }}</h2>
+  <h4>Writed by : {{book.auther}}</h4>
+  
+  
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'books:vote' book.id %}" method="post">
+{% csrf_token %}
+<span class="fa fa-star" name="vote" value="1"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span class="fa fa-star"></span>
+<span><i class="refresh fa fa-refresh" aria-hidden="true"></i></span>
+{% comment %} <input type="number" maxlength="1" name="vote" value=""> {% endcomment %}
+
+<button type="submite" name="vote" value="0" id="vote">Vote</button>
+
+</form>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      $(".fa-star").click(function() {
+        $("#vote").val($(this).index())
+        if (!$(this).hasClass("checked")) {
+          for (var i = 0; i < $(this).index(); i++) {
+            $(".fa-star").eq(i).addClass('checked')
+          }
+        } else {
+          for (var j = $(".fa-star").length; j >= $(this).index(); j--) {
+            $(".fa-star").eq(j).removeClass('checked')
+          }
+        }
+
+        // $(this).addClass("checked")
+      });
+      $(".refresh").click(function() {
+        for (var i = 0; i < $(".fa-star").length; i++) {
+          $(".fa-star").eq(i).removeClass('checked')
+        }
+      })
+    });
+  </script>
+</body>
+
+</html>
+
+
