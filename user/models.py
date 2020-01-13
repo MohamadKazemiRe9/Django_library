@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager , PermissionsMixin
 
 class ExpUserManager(BaseUserManager):
     def create_user(self,email,username,password=None):
@@ -27,7 +27,7 @@ class ExpUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class ExpUser(AbstractBaseUser):
+class ExpUser(AbstractBaseUser , PermissionsMixin):
     username = models.CharField(max_length=40,unique=True,verbose_name="نام کاربری")
     email = models.EmailField(max_length=100,unique=True,verbose_name="ایمیل")
     signing_date = models.DateField(verbose_name="تاریخ ثبت نام",auto_now_add=True)
